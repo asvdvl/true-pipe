@@ -65,25 +65,36 @@ namespace true_pipe
         {
             SaveSettings();
 
-            inputProcess = new Process();
-            inputProcess.StartInfo.FileName = settings.InputFileName;
-            inputProcess.StartInfo.Arguments = settings.InputArguments;
-            inputProcess.StartInfo.UseShellExecute = false;
-            inputProcess.StartInfo.RedirectStandardOutput = true;
+            inputProcess = new Process()
+            {
+                StartInfo = new ProcessStartInfo
+                {
+                    FileName = settings.InputFileName,
+                    Arguments = settings.InputArguments,
+                    UseShellExecute = false,
+                    RedirectStandardOutput = true,
+                    CreateNoWindow = settings.InputNoWindow,
+                }
+            };
             inputProcess.Start();
 
-            outputProcess = new Process();
-            outputProcess.StartInfo.FileName = settings.OutputFileName;
-            outputProcess.StartInfo.Arguments = settings.OutputArguments;
-            outputProcess.StartInfo.UseShellExecute = false;
-            outputProcess.StartInfo.RedirectStandardInput = true;
+            outputProcess = new Process()
+            {
+                StartInfo = new ProcessStartInfo
+                {
+                    FileName = settings.OutputFileName,
+                    Arguments = settings.OutputArguments,
+                    UseShellExecute = false,
+                    RedirectStandardInput = true,
+                    CreateNoWindow = settings.InputNoWindow,
+                }
+            };
+
             outputProcess.Start();
 
             inputProcessStream = inputProcess.StandardOutput.BaseStream as FileStream;
             outputProcessStream = outputProcess.StandardInput.BaseStream as FileStream;
 
-            int readLimit = 1 << 16;
-            int bufferSize = 1 << 8;
             int lastRead;
             byte[] data;
 
@@ -91,13 +102,13 @@ namespace true_pipe
             {
                 using (MemoryStream ms = new MemoryStream())
                 {
-                    byte[] buffer = new byte[bufferSize];
+                    byte[] buffer = new byte[settings.bufferSize];
                     do
                     {
                         lastRead = inputProcessStream.Read(buffer, 0, buffer.Length);
 
                         int readToEnd;
-                        while (lastRead < bufferSize && lastRead > 0)
+                        while (lastRead < settings.bufferSize && lastRead > 0)
                         {
                             readToEnd = inputProcessStream.Read(buffer, 0, buffer.Length - lastRead);
                             if (readToEnd == 0)
@@ -105,7 +116,7 @@ namespace true_pipe
                             lastRead += readToEnd;
                         }
                         ms.Write(buffer, 0, lastRead);
-                    } while (lastRead > 0 && readLimit > ms.Length);
+                    } while (lastRead > 0 && settings.readLimit > ms.Length);
                     data = ms.ToArray();
                 }
 
@@ -136,6 +147,18 @@ namespace true_pipe
             textBoxExacutableFileOutputPipe.Text = settings.OutputFileName;
             textBoxArgumentsInputPipe.Text = settings.InputArguments;
             textBoxArgumentsOutputPipe.Text = settings.OutputArguments;
+            checkBoxInputNoWindow.Checked = settings.InputNoWindow;
+            checkBoxOutputNoWindow.Checked = settings.OutputNoWindow;
+        }
+
+        private void checkBoxInputNoWindow_CheckedChanged(object sender, EventArgs e)
+        {
+            settings.InputNoWindow = checkBoxInputNoWindow.Checked;
+        }
+
+        private void checkBoxOutputNoWindow_CheckedChanged(object sender, EventArgs e)
+        {
+            settings.OutputNoWindow = checkBoxOutputNoWindow.Checked;
         }
     }
 
@@ -146,5 +169,9 @@ namespace true_pipe
         public String OutputFileName = "";
         public String InputArguments = "";
         public String OutputArguments = "";
+        public bool InputNoWindow = false;
+        public bool OutputNoWindow = false;
+        public int readLimit = 1 << 16;
+        public int bufferSize = 1 << 8;
     }
 }

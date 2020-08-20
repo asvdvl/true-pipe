@@ -34,8 +34,10 @@
             System.Windows.Forms.GroupBox groupBoxOutputPipe;
             System.Windows.Forms.Label label4;
             System.Windows.Forms.Label label3;
+            this.checkBoxInputNoWindow = new System.Windows.Forms.CheckBox();
             this.textBoxArgumentsInputPipe = new System.Windows.Forms.TextBox();
             this.textBoxExacutableFileInputPipe = new System.Windows.Forms.TextBox();
+            this.checkBoxOutputNoWindow = new System.Windows.Forms.CheckBox();
             this.textBoxExacutableFileOutputPipe = new System.Windows.Forms.TextBox();
             this.textBoxArgumentsOutputPipe = new System.Windows.Forms.TextBox();
             this.buttonStart = new System.Windows.Forms.Button();
@@ -69,16 +71,28 @@
             // 
             // groupBoxInputPipe
             // 
+            groupBoxInputPipe.Controls.Add(this.checkBoxInputNoWindow);
             groupBoxInputPipe.Controls.Add(label1);
             groupBoxInputPipe.Controls.Add(label2);
             groupBoxInputPipe.Controls.Add(this.textBoxArgumentsInputPipe);
             groupBoxInputPipe.Controls.Add(this.textBoxExacutableFileInputPipe);
             groupBoxInputPipe.Location = new System.Drawing.Point(4, 3);
             groupBoxInputPipe.Name = "groupBoxInputPipe";
-            groupBoxInputPipe.Size = new System.Drawing.Size(666, 66);
+            groupBoxInputPipe.Size = new System.Drawing.Size(666, 83);
             groupBoxInputPipe.TabIndex = 2;
             groupBoxInputPipe.TabStop = false;
             groupBoxInputPipe.Text = "input pipe";
+            // 
+            // checkBoxInputNoWindow
+            // 
+            this.checkBoxInputNoWindow.AutoSize = true;
+            this.checkBoxInputNoWindow.Location = new System.Drawing.Point(8, 60);
+            this.checkBoxInputNoWindow.Name = "checkBoxInputNoWindow";
+            this.checkBoxInputNoWindow.Size = new System.Drawing.Size(77, 17);
+            this.checkBoxInputNoWindow.TabIndex = 2;
+            this.checkBoxInputNoWindow.Text = "no window";
+            this.checkBoxInputNoWindow.UseVisualStyleBackColor = true;
+            this.checkBoxInputNoWindow.CheckedChanged += new System.EventHandler(this.checkBoxInputNoWindow_CheckedChanged);
             // 
             // textBoxArgumentsInputPipe
             // 
@@ -96,16 +110,28 @@
             // 
             // groupBoxOutputPipe
             // 
+            groupBoxOutputPipe.Controls.Add(this.checkBoxOutputNoWindow);
             groupBoxOutputPipe.Controls.Add(label4);
             groupBoxOutputPipe.Controls.Add(label3);
             groupBoxOutputPipe.Controls.Add(this.textBoxExacutableFileOutputPipe);
             groupBoxOutputPipe.Controls.Add(this.textBoxArgumentsOutputPipe);
-            groupBoxOutputPipe.Location = new System.Drawing.Point(4, 69);
+            groupBoxOutputPipe.Location = new System.Drawing.Point(4, 86);
             groupBoxOutputPipe.Name = "groupBoxOutputPipe";
-            groupBoxOutputPipe.Size = new System.Drawing.Size(666, 66);
+            groupBoxOutputPipe.Size = new System.Drawing.Size(666, 83);
             groupBoxOutputPipe.TabIndex = 2;
             groupBoxOutputPipe.TabStop = false;
             groupBoxOutputPipe.Text = "output pipe";
+            // 
+            // checkBoxOutputNoWindow
+            // 
+            this.checkBoxOutputNoWindow.AutoSize = true;
+            this.checkBoxOutputNoWindow.Location = new System.Drawing.Point(8, 60);
+            this.checkBoxOutputNoWindow.Name = "checkBoxOutputNoWindow";
+            this.checkBoxOutputNoWindow.Size = new System.Drawing.Size(77, 17);
+            this.checkBoxOutputNoWindow.TabIndex = 2;
+            this.checkBoxOutputNoWindow.Text = "no window";
+            this.checkBoxOutputNoWindow.UseVisualStyleBackColor = true;
+            this.checkBoxOutputNoWindow.CheckedChanged += new System.EventHandler(this.checkBoxOutputNoWindow_CheckedChanged);
             // 
             // label4
             // 
@@ -141,7 +167,7 @@
             // 
             // buttonStart
             // 
-            this.buttonStart.Location = new System.Drawing.Point(588, 142);
+            this.buttonStart.Location = new System.Drawing.Point(595, 175);
             this.buttonStart.Name = "buttonStart";
             this.buttonStart.Size = new System.Drawing.Size(75, 23);
             this.buttonStart.TabIndex = 4;
@@ -153,7 +179,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(675, 172);
+            this.ClientSize = new System.Drawing.Size(675, 203);
             this.Controls.Add(this.buttonStart);
             this.Controls.Add(groupBoxOutputPipe);
             this.Controls.Add(groupBoxInputPipe);
@@ -175,6 +201,8 @@
         private System.Windows.Forms.TextBox textBoxExacutableFileOutputPipe;
         private System.Windows.Forms.TextBox textBoxArgumentsOutputPipe;
         private System.Windows.Forms.Button buttonStart;
+        private System.Windows.Forms.CheckBox checkBoxInputNoWindow;
+        private System.Windows.Forms.CheckBox checkBoxOutputNoWindow;
     }
 }
 
